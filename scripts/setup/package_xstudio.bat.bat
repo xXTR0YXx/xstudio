@@ -96,11 +96,24 @@ for %%F in ("%debugDLLFolder%\*.dll") do (
     copy "%%F" "%debugBinFolder%\%%~nxF" /Y
 )
 
+for %%F in ("%debugDLLFolder%\*.pdb") do (
+    echo Copying "%%~nxF" to "%debugBinFolder%\%%~nxF"
+    copy "%%F" "%debugBinFolder%\%%~nxF" /Y
+)
+
+
 REM Copy all DLL files from QT bin folder to Debug bin folder
 for %%F in ("%QTBinFolder%\*.dll") do (
     echo Copying "%%~nxF" to "%debugBinFolder%\%%~nxF"
     copy "%%F" "%debugBinFolder%\%%~nxF" /Y
 )
+
+REM Copy all DLL files from QT bin folder to Release bin folder
+for %%F in ("%QTBinFolder%\*.dll") do (
+    echo Copying "%%~nxF" to "%releaseBinFolder%\%%~nxF"
+    copy "%%F" "%releaseBinFolder%\%%~nxF" /Y
+)
+
 
 REM Recursively search for "Release" folders and copy DLL files
 for /d /r "%buildFolder%" %%D in (Release) do (
@@ -147,31 +160,50 @@ xcopy /E /I "%workspacePath%\build\bin\plugin" "%debugBinFolder%\plugin"
 xcopy /E /I "%workspacePath%\build\bin\font" "%debugBinFolder%\font"
 set "quickPromiseFolder=%workspacePath%\build\extern\quickpromise\debug"
 
+xcopy /E /I "%QTPath%\qml\QtQuick" "%releaseBinFolder%\QtQuick"
+xcopy /E /I "%QTPath%\qml\QtGraphicalEffects" "%releaseBinFolder%\QtGraphicalEffects"
+xcopy /E /I "%QTPath%\qml\Qt\labs" "%releaseBinFolder%\Qt\labs"
+xcopy /E /I "%QTPath%\qml\QtQuick.2" "%releaseBinFolder%\QtQuick.2"
+xcopy /E /I "%workspacePath%\build\bin\preference" "%releaseBinFolder%\preference"
+xcopy /E /I "%workspacePath%\build\bin\plugin" "%releaseBinFolder%\plugin"
+xcopy /E /I "%workspacePath%\build\bin\font" "%releaseBinFolder%\font"
+set "quickPromiseFolder=%workspacePath%\build\extern\quickpromise\release"
+
 REM Create the QuickPromise folder if it doesn't exist in debugBinFolder
 if not exist "%debugBinFolder%\QuickPromise" mkdir "%debugBinFolder%\"
+if not exist "%releaseBinFolder%\QuickPromise" mkdir "%releaseBinFolder%\"
 
 REM Copy DLL files from quickPromiseFolder to the QuickPromise subfolder in debugBinFolder
 for %%F in ("%quickPromiseFolder%\*.dll") do (
     echo Copying "%%~nxF" to "%debugBinFolder%\QuickPromise\%%~nxF"
     copy "%%F" "%debugBinFolder%\QuickPromise\%%~nxF" /Y
+
+    echo Copying "%%~nxF" to "%releaseBinFolder%\QuickPromise\%%~nxF"
+    copy "%%F" "%releaseBinFolder%\QuickPromise\%%~nxF" /Y
 )
 
 REM Copy QuickPromise extra files
 xcopy /E /I "%workspacePath%\extern\quickpromise\qml" "%debugBinFolder%\"
+xcopy /E /I "%workspacePath%\extern\quickpromise\qml" "%releaseBinFolder%\"
 
 
 set "pluginSourceFolder=%workspacePath%\build\src\plugin"
-set "pluginTargetFolder=%debugBinFolder%\plugin"
+set "debugPluginTargetFolder=%debugBinFolder%\plugin"
+set "releasePluginTargetFolder=%releaseBinFolder%\plugin"
 
 REM Create the plugin Target folder if it doesn't exist
-if not exist "%pluginTargetFolder%" mkdir "%pluginTargetFolder%"
+if not exist "%debugPluginTargetFolder%" mkdir "%debugPluginTargetFolder%"
+if not exist "%releasePluginTargetFolder%" mkdir "%releasePluginTargetFolder%"
 
 REM Recursively search for "Debug" folders under the plugin source directory and copy DLL files
 for /d /r "%pluginSourceFolder%" %%D in (Debug) do (
     pushd "%%D"
     for %%F in (*.dll) do (
-        echo Copying "%%~nxF" to "%pluginTargetFolder%\%%~nxF"
-        copy "%%F" "%pluginTargetFolder%\%%~nxF" /Y
+        echo Copying "%%~nxF" to "%debugPluginTargetFolder%\%%~nxF"
+        copy "%%F" "%debugPluginTargetFolder%\%%~nxF" /Y
+
+        echo Copying "%%~nxF" to "%releasePluginTargetFolder%\%%~nxF"
+        copy "%%F" "%releasedebugPluginTargetFolder%\%%~nxF" /Y
     )
     popd
 )
@@ -189,15 +221,21 @@ for %%F in ("%ffmpegBinFolder%\*.dll") do (
 )
 
 set "fontsSourceFolder=%workspacePath%\build\bin\fonts"
-set "fontsTargetFolder=%debugBinFolder%\fonts"
+set "debugFontsTargetFolder=%debugBinFolder%\fonts"
+set "releaseFontsTargetFolder=%releaseBinFolder%\fonts"
 
-REM Create the fonts Target folder if it doesn't exist
-if not exist "%fontsTargetFolder%" mkdir "%fontsTargetFolder%"
+REM Create the fonts Target folders if they don't exist
+if not exist "%debugFontsTargetFolder%" mkdir "%debugFontsTargetFolder%"
+if not exist "%releaseFontsTargetFolder%" mkdir "%releaseFontsTargetFolder%"
 
 REM Copy the entire "fonts" directory to "Debug" folder
-xcopy /E /I "%fontsSourceFolder%" "%fontsTargetFolder%"
+xcopy /E /I "%fontsSourceFolder%" "%debugFontsTargetFolder%"
+
+REM Copy the entire "fonts" directory to "Release" folder
+xcopy /E /I "%fontsSourceFolder%" "%releaseFontsTargetFolder%"
 
 "%QTPath%\bin\windeployqt.exe" --qmldir --force "%buildFolder%" "%releaseBinFolder%\xstudio.exe"
+"%QTPath%\bin\windeployqt.exe" "%releaseBinFolder%\xstudio.exe"
 "%QTPath%\bin\windeployqt.exe" --qmldir --force "%buildFolder%" "%debugBinFolder%\xstudio.exe"
 
 echo DLL files from "Debug" folders copied to "%debugBinFolder%"
