@@ -235,6 +235,7 @@ REM Copy the entire "fonts" directory to "Release" folder
 xcopy /E /I "%fontsSourceFolder%" "%releaseFontsTargetFolder%"
 
 "%QTPath%\bin\windeployqt.exe" --qmldir --force "%buildFolder%" "%releaseBinFolder%\xstudio.exe"
+"%QTPath%\bin\windeployqt.exe" "%debugBinFolder%\xstudio.exe"
 "%QTPath%\bin\windeployqt.exe" "%releaseBinFolder%\xstudio.exe"
 "%QTPath%\bin\windeployqt.exe" --qmldir --force "%buildFolder%" "%debugBinFolder%\xstudio.exe"
 
