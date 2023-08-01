@@ -9,7 +9,9 @@ To build XStudio on Windows, you need to install some basic tools. The Windows b
 
 2. Install MS Visual Studio 2019 (Community Edition is fine) [Visual Studio Legacy Installs](https://visualstudio.microsoft.com/vs/older-downloads/).
 
-3. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder. 
+3. Restart your machine after Visual Studio finishes installing
+
+4. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder.
 
 ## Install Qt 5.15
 ---
@@ -57,6 +59,7 @@ To build XStudio using CMake GUI, follow these steps:
 6. Click on the "Generate" button.
 7. Click on the "Open Project" button.
 8. Build the solution.
+9. Once built, run scripts/setup/package_xstudio.bat
 
 ## Build XStudio using the commandline
 ---
