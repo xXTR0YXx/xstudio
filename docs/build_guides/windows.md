@@ -7,7 +7,9 @@ To build XStudio on Windows, you need to install some basic tools. The Windows b
 
 1. First, ensure that you are using an [administrative](https://www.howtogeek.com/194041/how-to-open-the-command-prompt-as-administrator-in-windows-8.1/) shell.
 
-2. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder. 
+2. Install MS Visual Studio 2019 (Community Edition is fine) [Visual Studio Legacy Installs](https://visualstudio.microsoft.com/vs/older-downloads/).
+
+3. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder. 
 
 ## Install Qt 5.15
 ---
