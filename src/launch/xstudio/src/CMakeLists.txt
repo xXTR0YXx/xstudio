@@ -79,6 +79,7 @@ set_target_properties(${PROJECT_NAME}
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     if(WIN32)
 		OUTPUT_NAME "${PROJECT_NAME}"
+		VS_DEBUGGER_ENVIRONMENT XSTUDIO_ROOT=${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>
 	else()
 		OUTPUT_NAME "${PROJECT_NAME}.bin"
 	endif()
