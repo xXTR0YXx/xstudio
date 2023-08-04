@@ -72,14 +72,29 @@ target_link_libraries(${PROJECT_NAME}
 
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE dbghelp)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+      COMMAND_EXPAND_LISTS
+    )
+
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${Qt5_DIR}/../../../bin/windeployqt.exe ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${PROJECT_NAME}.exe
+    )
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+      COMMAND ${Qt5_DIR}/../../../bin/windeployqt.exe  --qmldir C:/xstudio/build/bin/plugin/qml ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${PROJECT_NAME}.exe
+    )
+
+
 endif()
 
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     if(WIN32)
-		OUTPUT_NAME "${PROJECT_NAME}"
-		VS_DEBUGGER_ENVIRONMENT XSTUDIO_ROOT=${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>
+                OUTPUT_NAME "${PROJECT_NAME}"
+                VS_DEBUGGER_ENVIRONMENT XSTUDIO_ROOT=${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>
+		VS_DEBUGGER_ENVIRONMENT PATH=${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/bin
+                CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD true
 	else()
 		OUTPUT_NAME "${PROJECT_NAME}.bin"
 	endif()
