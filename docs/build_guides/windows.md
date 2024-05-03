@@ -20,12 +20,12 @@ To install Qt 5.15, follow these steps:
 
 1. [Download](https://www.qt.io/download-qt-installer-oss?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4) the Qt Windows installer.
 2. Execute the installer.
-3. During the installation, select the components as shown in the following picture:
+3. During the installation, select the components as shown in the following picture: (To see the legacy version 5.15.2 in your list you have to click on ARCHIVE and then FILTER)
 
    ![Qt Components](/docs/build_guides/media/images/Qt5_select_components.png)
 
-4. The installation may take some time. You can grab a cup of coffee while it completes.
-5. Note that you will need a valid username and password to download Qt. The installer allows you to add or remove components in the future.
+5. The installation may take some time. You can grab a cup of coffee while it completes.
+6. Note that you will need a valid username and password to download Qt. The installer allows you to add or remove components in the future.
 
 ## Install FFMPEG
 ---
