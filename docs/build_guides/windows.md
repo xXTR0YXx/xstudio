@@ -11,8 +11,8 @@ To build XStudio on Windows, you need to install some basic tools. The Windows b
 
 3. Restart your machine after Visual Studio finishes installing
 
-4. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder.
-
+4. Execute the script `setup_dev_env.ps1` located in the [script/setup](/scripts/setup/setup_dev_env.ps1) folder. By default running scripts in Power shell is disabled, so you have to enable that temporarily by using powershell -ExecutionPolicy Bypass -File setup_dev_env
+.ps1
 ## Install Qt 5.15
 ---
 
