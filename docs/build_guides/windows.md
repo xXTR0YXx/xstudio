@@ -20,7 +20,7 @@ To install Qt 5.15, follow these steps:
 
 1. [Download](https://www.qt.io/download-qt-installer-oss?hsCtaTracking=99d9dd4f-5681-48d2-b096-470725510d34%7C074ddad0-fdef-4e53-8aa8-5e8a876d6ab4) the Qt Windows installer.
 2. Execute the installer.
-3. During the installation, select the components as shown in the following picture:
+3. During the installation, select the components as shown in the following picture: By default these legacy options are not available. You need to choose "Archive" then "Filter" to get access to this version of QT
 
    ![Qt Components](/docs/build_guides/media/images/Qt5_select_components.png)
 
